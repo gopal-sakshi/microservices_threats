@@ -3,12 +3,12 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const request = require('request');
 
-const port = process.argv.slice(2)[0];
+const port = process.argv.slice(2)[0] || 8002;
 const app = express();
 
 app.use(bodyParser.json());
 
-const heroesService = 'http://localhost:8081';
+const heroesService = 'http://localhost:8000';
 
 
 const threats = [
@@ -41,6 +41,8 @@ app.get('/threats', (req, res) => {
 });
 
 app.post('/assignment', (req, res) => {
+    console.log(req);
+    console.log(req.body);
   request.post({
       headers: {'content-type': 'application/json'},
       url: `${heroesService}/hero/${req.body.heroId}`,
@@ -53,6 +55,7 @@ app.post('/assignment', (req, res) => {
           const threat = threats.find(subject => subject.id === threatId);
           threat.assignedHero = req.body.heroId;
           res.status(202).send(threat);
+        // res.status(202).send('good job debugging');
       } else {
           res.status(400).send({problem: `Hero Service responded with issue ${err}`});
       }
