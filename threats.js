@@ -3,12 +3,12 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const request = require('request');
 
-const port = process.argv.slice(2)[0] || 8002;
+const port = process.argv.slice(2)[0] || 3015;
 const app = express();
 
 app.use(bodyParser.json());
 
-const heroesService = 'http://localhost:8000';
+const heroesService = 'http://localhost:3014';
 
 
 const threats = [
